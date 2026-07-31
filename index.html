@@ -655,8 +655,8 @@ table.data-table th.num {
     <ol>
       <li><a href="#chapter-1">1 &middot; Databases</a><span class="sub">The spreadsheet that beat a Sunday</span></li>
       <li><a href="#chapter-2">2 &middot; Data Modelling</a><span class="sub">What is an order, really?</span></li>
-      <li><a href="#chapter-3">3 &middot; One Order, Many Items</a><span class="sub">The dish that would not fit in a box</span></li>
-      <li><a href="#chapter-4">4 &middot; Keys &amp; Relationships</a><span class="sub">How things hold hands</span></li>
+      <li><a href="#chapter-3">3 &middot; One Order, Many Items</a><span class="sub">The dish that would not fit in one line</span></li>
+      <li><a href="#chapter-4">4 &middot; Keys &amp; Relationships</a><span class="sub">How things point to each other</span></li>
       <li><a href="#chapter-5">5 &middot; Types, NULL &amp; Constraints</a><span class="sub">What kind of fact is this?</span></li>
       <li><a href="#chapter-6">6 &middot; SQL, Part One</a><span class="sub">Asking the first question</span></li>
       <li><a href="#chapter-7">7 &middot; SQL, Part Two</a><span class="sub">Questions that add up</span></li>
@@ -668,7 +668,7 @@ table.data-table th.num {
       <li><a href="#chapter-9">9 &middot; Indexing</a><span class="sub">The index at the back of the book</span></li>
       <li><a href="#chapter-10">10 &middot; Two Kinds of Questions</a><span class="sub">Why the app and the analyst fight</span></li>
       <li><a href="#chapter-11">11 &middot; The Warehouse</a><span class="sub">A room just for thinking</span></li>
-      <li><a href="#chapter-12">12 &middot; ETL, ELT &amp; Batch</a><span class="sub">Carrying data across</span></li>
+      <li><a href="#chapter-12">12 &middot; ETL, ELT &amp; Batch</a><span class="sub">Carrying data across, and cleaning it</span></li>
       <li><a href="#chapter-13">13 &middot; Dimensional Modelling</a><span class="sub">The star in the middle</span></li>
       <li><a href="#chapter-14">14 &middot; Slowly Changing Dimensions</a><span class="sub">When a kitchen changes its name</span></li>
     </ol>
@@ -702,7 +702,7 @@ table.data-table th.num {
 
     <div class="part-label">Closing</div>
     <ol>
-      <li><a href="#chapter-30">30 &middot; What a Data Engineer Really Is</a><span class="sub">Ten cities later</span></li>
+      <li><a href="#chapter-30">30 &middot; What a Data Engineer Really Is</a><span class="sub">The question, asked again</span></li>
     </ol>
 
     <div class="part-label">The Zaayka Dataset</div>
@@ -722,9 +722,7 @@ table.data-table th.num {
     <p class="tagline">
       Every table the story uses, kept in one place, so you never lose
       the thread of a number. This page grows as the story grows.
-      Right now, it shows what the dataset looks like at the very
-      start: one city, six kitchens, six customers, and the first
-      handful of orders.
+      It shows the dataset as it stands early in the story: one city, seven kitchens, six customers, and the first handful of orders. As Zaayka grows into new cities, and as kitchens change their names, the living warehouse grows with it. This page stays as it is, a fixed record of where everything began.
     </p>
   </div>
 
@@ -1266,7 +1264,13 @@ table.data-table th.num {
     <p>Meera thought about it. "Someone orders food. It comes from a kitchen. They pay for it. It gets delivered."</p>
 
     <p>
-      "That's a story, not a shape," Mohan said. "A computer can't
+      "That's a story, not a shape," Mohan said. "Think of a government
+      form. Every box has a label, and every box has a rule about what
+      you may write in it. You cannot put your name in the date box."
+    </p>
+
+    <p>
+      "So we do the same thing here," he said. "A computer can't
       store a story like that. What we need to do is take that story
       and pull out the exact facts hiding inside it. Each fact gets its
       own name."
@@ -2089,6 +2093,12 @@ table.data-table th.num {
     </p>
 
     <p>
+      "The safe type is called DECIMAL, or NUMERIC in some databases. It
+      stores the value exactly, down to the paisa, every time. No stray
+      tails."
+    </p>
+
+    <p>
       Meera wrote it down and underlined it twice. It was the first
       rule that had come from a real person losing real money.
     </p>
@@ -2579,6 +2589,13 @@ table.data-table th.num {
       one row."
     </p>
 
+    <p>
+      "One small thing before you read it," he added. "You'll see me
+      write orders o and kitchens k. Those are just nicknames, so I
+      can type o.total instead of orders.total. It saves typing.
+      Nothing more is going on."
+    </p>
+
     <div class="code-block">
       <span class="code-label">SQL</span>
 <pre><span class="kw">SELECT</span> k.name,
@@ -2640,7 +2657,9 @@ table.data-table th.num {
       <p>
         One thing worth knowing: a plain join keeps only the rows
         that match, so a kitchen with zero orders that day quietly
-        disappears from the result. When those empty cases matter,
+        disappears from the result. Look in the dataset and you will
+        find two of them, Chai Point Corner and Nandini Sweets, with
+        menus but no orders at all. When those empty cases matter,
         a different kind of join, an outer join, keeps them and shows
         a zero instead of hiding them.
       </p>
@@ -4380,6 +4399,15 @@ table.data-table th.num {
     <p>Meera thought. "By city. Bengaluru orders, Hyderabad orders, Pune orders."</p>
 
     <p>
+      Mohan held up a hand. "Two steps, though, not one. First you
+      partition the table: you cut it into slices by city. That is the
+      design decision. Then you shard it: you put each slice on a
+      different machine. Partitioning is what you cut. Sharding is where
+      the pieces go. People mix the two words up constantly, but they
+      are separate acts."
+    </p>
+
+    <p>
       "By city. So you put Bengaluru's orders on one machine.
       Hyderabad's on another. Pune's on a third. Same orders table,
       same shape, just split across machines, each machine holding
@@ -4583,6 +4611,12 @@ table.data-table th.num {
     <p>"The shuffle. Everyone hands their dosa counts to whoever's in charge of dosas."</p>
 
     <p>
+      "And the shuffle is the expensive part," Mohan said. "All that
+      counting has to travel across the network to reach the right
+      machine. A good engineer shapes the first step so that as little
+      as possible has to move in the second."</p>
+
+    <p>
       "Exactly that. And the third move. Now that every dish's counts
       are gathered in one place, you add them up, once, to a final
       number. That last combining is called the <strong>reduce</strong>." He drew all
@@ -4761,6 +4795,14 @@ table.data-table th.num {
       someone who owns millions of them." He said it plainly. "You
       needed a wedding hall for one evening? You rent it for the
       evening, and walk away, and pay nothing tomorrow."
+    </p>
+
+    <p>
+      "That cheap, permanent place has a name," he added. "It's called
+      object storage. Think of it as an enormous, cheap filing cabinet.
+      It has no tables and speaks no SQL. It just holds files, safely,
+      for very little money. The rented machines read those files when
+      there's thinking to be done."
     </p>
 
     <p>
@@ -5233,6 +5275,15 @@ table.data-table th.num {
     </div>
 
     <p>
+      "Why not send the rider's position straight to the map?" Mohan
+      asked, before she could. "Because if the map is down for ten
+      seconds, that message is gone forever. With the log in the
+      middle, the message simply waits on the strip until the map
+      comes back and reads on from where it stopped. The log is the
+      safety net."
+    </p>
+
+    <p>
       "And then anyone who cares can read the strip," Meera said
       slowly, seeing it, "at their own speed. The live map reads it to
       move the dots. The report reads the same strip to count
@@ -5427,6 +5478,14 @@ table.data-table th.num {
     </p>
 
     <p>
+      "Said properly," Mohan added, "an action is idempotent when doing
+      it many times leaves things in exactly the same state as doing it
+      once. Setting a rider's position to a particular corner is
+      idempotent. Adding one to a counter is not, because the second
+      time changes the answer again."
+    </p>
+
+    <p>
       "Idempotent," Meera said. "Twice is the same as once. So I stop
       fearing duplicates. I just make sure they can't hurt anything."
       She wrote it down. "Never lose, and make the doubles harmless.
@@ -5613,6 +5672,14 @@ table.data-table th.num {
       ever loops back on itself. Cleaning never waits for something
       that waits for cleaning. It's a chain that only flows one way,
       from start to finish."
+    </p>
+
+    <p>
+      "And that matters more than it sounds," Mohan said. "If a job
+      could loop back to something before it, you'd get a job waiting
+      on a job that is waiting on it. Neither one would ever start, and
+      the whole night would simply freeze. That's why no loops is a
+      strict rule, not a style preference."
     </p>
 
     <p>
@@ -6217,7 +6284,8 @@ table.data-table th.num {
       people, investors, responsibilities, a system a whole company
       leans on. The last things Meera learns are the ones that turn a
       clever build into something that can be trusted, and outlast its
-      makers.
+      makers. The watermark has been drawn. What was late was not
+      lost.
     </p>
   </div>
 
@@ -6873,7 +6941,13 @@ table.data-table th.num {
       Distance is similarity. Nearness is meaning."
     </p>
 
-    <p>Mohan was quiet, looking at the little map, at the biryanis sitting close, the hot drinks clustered warm together.</p>
+    <p>"And these position maps live in their own kind of database," she
+      added. "It's called a vector store. It exists to answer one
+      question quickly: what sits nearest to this point in meaning?"
+    </p>
+
+    <p>
+      Mohan was quiet, looking at the little map, at the biryanis sitting close, the hot drinks clustered warm together.</p>
 
     <p>
       "Meaning as nearness," he said slowly. "Two things are what
@@ -7080,6 +7154,18 @@ table.data-table th.num {
     </p>
 
     <p>
+      "And if you truly must rename something?" Meera asked.
+    </p>
+
+    <p>
+      "Then you do it slowly, in four steps," Mohan said. "Add the new
+      field alongside the old one. Copy the old data across into it.
+      Move every reader over to the new field. And only then, weeks
+      later, when nothing is using the old one, remove it." He shrugged.
+      "Never rip. Always ease."
+    </p>
+
+    <p>
       "Add gently. Never make the old world wrong just to let the
       new one in," Meera said. "You grow the shape without breaking
       what was already living in it."
@@ -7136,9 +7222,9 @@ table.data-table th.num {
     <p>Mohan laughed too, and pulled her closer under his arm.</p>
 
     <p>
-      "We evolved the schema safely," he agreed. "Best friends, still.
-      Every column intact. Just one new field, added gently, with a
-      good default." He kissed the top of her head. "You were always
+      "We didn't replace anything," he agreed. "We just made room. The
+      friendship never shrank to make space for the love. It only grew
+      wide enough to hold both." He kissed the top of her head. "You were always
       going to keep the friend, Meera. I'd have refused the love
       before I let it cost me that. Some fields you never remove,
       whatever else you add."
@@ -7334,6 +7420,15 @@ table.data-table th.num {
       Worries I didn't construct. Cleverness I let go of." He took her
       hand. "Knowing when to stop building is most of wisdom. In
       data. And in everything else."
+    </p>
+
+    <p>
+      Meera thought about the worries she had built for herself over
+      the years, late at night, alone. Whether she was good enough.
+      Whether she would fail. Whether Mohan would ever look at her
+      the way she looked at him. She had constructed every one of
+      them herself, carefully, out of nothing at all. Tonight she
+      decided to leave them unbuilt.
     </p>
 
     <p>
@@ -7550,7 +7645,7 @@ table.data-table th.num {
     <p>Mohan did not say anything for a long moment. The bell had faded. The city hummed. The tulsi kept its watch.</p>
 
     <p>
-      "I spent fifteen years learning that," he said at last, "and I
+      "I spent eight years learning that," he said at last, "and I
       never once said it as well as you just did. At dawn. Off the top
       of your head. To explain why you're happy." He shook his head
       slowly, wonderingly. "You were never my student. I see that
